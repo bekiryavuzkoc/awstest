@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AmazonTest</string>
+    <string name="create_user">Create a user</string>
+    <string name="read_all_users">Read all users</string>
+    <string name="read_a_specific_user">Read the user</string>
+    <string name="update_the_user">Update age</string>
+    <string name="delete_user">Delete the user</string>
+    <string name="hint_name">Kelly Murphy</string>
+    <string name="hint_id">Enter ID</string>
+    <string name="hint_enter_age">Enter Age</string>
+</resources>
