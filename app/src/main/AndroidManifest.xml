@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AmazıonTest">
         <activity
-            android:name="com.example.amazontest.com.amazontest.ui.activity.MainActivity"
+            android:name="com.ui.activities.baseactivity.BaseActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

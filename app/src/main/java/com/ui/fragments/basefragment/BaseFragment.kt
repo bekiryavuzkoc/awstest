@@ -11,9 +11,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
-
     protected abstract fun initUserInterface(view: View)
-
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
