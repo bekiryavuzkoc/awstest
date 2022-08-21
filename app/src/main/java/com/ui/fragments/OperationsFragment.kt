@@ -8,10 +8,17 @@ import com.example.amazontest.databinding.FragmentOperationsBinding
 import com.ui.fragments.basefragment.BaseFragment
 import com.viewmodel.OperationsViewModel
 import com.viewmodel.event.EventObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class OperationsFragment : BaseFragment<FragmentOperationsBinding>() {
 
     private val viewModel: OperationsViewModel by viewModels()
+
+    private val job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
     override fun getLayoutId() = R.layout.fragment_operations
 
@@ -26,23 +33,27 @@ class OperationsFragment : BaseFragment<FragmentOperationsBinding>() {
         }
 
         binding.readSpecificUserButton.setOnClickListener {
-            viewModel.create(binding.nameEditText.toString())
-            binding.nameEditText.text?.clear()
+            uiScope.launch(Dispatchers.IO) {
+                viewModel.readSpecificID(binding.idEditText.toString())
+            }
+            binding.idEditText.text?.clear()
         }
 
         binding.updateUserButton.setOnClickListener {
-            viewModel.create(binding.nameEditText.toString())
-            binding.nameEditText.text?.clear()
+            viewModel.updateSpecificID(
+                binding.idEditText.toString(),
+                binding.updateUserAgeEdittext.toString()
+            )
+            binding.updateUserAgeEdittext.text?.clear()
         }
 
         binding.deleteUserButton.setOnClickListener {
-            viewModel.create(binding.nameEditText.toString())
-            binding.nameEditText.text?.clear()
+            viewModel.deleteUser(binding.idDeleteUser.toString())
+            binding.idDeleteUser.text?.clear()
         }
 
         binding.readAllUsers.setOnClickListener {
-            viewModel.create(binding.nameEditText.toString())
-            binding.nameEditText.text?.clear()
+            viewModel.readAll()
         }
     }
 
@@ -51,5 +62,10 @@ class OperationsFragment : BaseFragment<FragmentOperationsBinding>() {
         viewModel.toastText.observe(viewLifecycleOwner, EventObserver {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }
